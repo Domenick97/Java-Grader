@@ -25,6 +25,7 @@ public class Homework {
 	 */
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner wordReader = new Scanner(new File("input/HW-student.txt"));
+		
 		// Array of assignment names to check for completion
 		String[] assignments = { "numbersElements", "ReferenceMystery2", "jaggedArray", "mode", "longestSortedSequence",
 				"ReferenceMystery3", "PointClient", "publicVsPrivate", "addTimeSpan", "getSlopeLine" };
@@ -43,6 +44,7 @@ public class Homework {
 			}
 		}
 		boolean t = false;
+		
 		for (int j = 0; j < assignments.length; j++) {
 			if (assignments[j].equals("Check"))
 				count += 10;
@@ -54,6 +56,7 @@ public class Homework {
 					missing += ", " + assignments[j];
 			}
 		}
+		
 		if (count == 100)
 			System.out.println(100);
 		else
