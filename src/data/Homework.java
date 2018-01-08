@@ -13,22 +13,33 @@ import java.io.*;
  *
  */
 public class Homework {
+	/** Instance of the Homework */
+	private static Homework singlton = new Homework();
+	
+	/**
+	 * Gets the instance of the
+	 * 
+	 * @return the instance of the Derivative
+	 */
+	public static Homework getInstance() {
+		return singlton;
+	}
 
 	/**
 	 * Main function responsible for reading a text file and determining the
 	 * students grade.
 	 * 
-	 * @param args
-	 *            command-line arguments
+	 * @param assign
+	 *            array of assignment names
 	 * @throws FileNotFoundException
 	 *             exception thrown if the "HW-student.txt" is not found
 	 */
-	public static void main(String[] args) throws FileNotFoundException {
+	public String scan(String[] assign) throws FileNotFoundException {
 		Scanner wordReader = new Scanner(new File("input/HW-student.txt"));
 		
 		// Array of assignment names to check for completion
-		String[] assignments = { "numbersElements", "ReferenceMystery2", "jaggedArray", "mode", "longestSortedSequence",
-				"ReferenceMystery3", "PointClient", "publicVsPrivate", "addTimeSpan", "getSlopeLine" };
+		String[] assignments = assign;//{ "numbersElements", "ReferenceMystery2", "jaggedArray", "mode", "longestSortedSequence",
+				//"ReferenceMystery3", "PointClient", "publicVsPrivate", "addTimeSpan", "getSlopeLine" };
 
 		int count = 0;
 
@@ -57,10 +68,11 @@ public class Homework {
 			}
 		}
 		
-		if (count == 100)
-			System.out.println(100);
-		else
-			System.out.println(count + " (missing " + missing + ")");
 		wordReader.close();
+		
+		if (count == 100)
+			return "100";
+		else
+			return count + " (missing " + missing + ")";
 	}
 }
