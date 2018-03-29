@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import data.Homework;
@@ -53,7 +56,11 @@ public class HomeworkGUI extends JFrame implements ActionListener {
     JTextField tbAssign9 = new JTextField();
     /** Text box for assignment names */
     JTextField tbAssign10 = new JTextField();
-
+    /** Text area to paste in the assignment */
+    JTextArea taInputMain = new JTextArea ();
+    /** Text area to paste in the assignment */
+    JTextArea taOutputMain = new JTextArea ();
+    
     /** Panel for the prompt */
     JPanel pnlPrompt = new JPanel();
     /** Panel for the input fields */
@@ -73,7 +80,7 @@ public class HomeworkGUI extends JFrame implements ActionListener {
         Container cont = getContentPane();
 
         setTitle("Homework Grader");
-        setSize(600, 300);
+        setSize(800, 500);
         setLocation(400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
@@ -83,28 +90,6 @@ public class HomeworkGUI extends JFrame implements ActionListener {
         
         lblOut = new JLabel();
         JLabel lblNumber = new JLabel("Enter assignments below (only enter one)");
-        //TODO: GridBag Layout for the panel
-//        c.fill = GridBagConstraints.BOTH;
-//        c.weightx = .0;
-//        c.gridx = 0;
-//        c.gridy = 0;
-//        //c.anchor = GridBagConstraints.CENTER;
-//        pnlInput.add(lblNumber, c);
-//        
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        c.weightx = .0;
-//        c.weighty = .0;
-//        
-//        c.gridx = 1;
-//        c.gridy = 0;
-//        pnlInput.add(tbNumber, c);
-//        
-//        c.weightx = .25;
-//        c.weighty = .25;
-//        c.gridx = 0;
-//        c.gridy = 1;
-//        pnlInput.add(lblBaseTen, c);
-        
         
         tbAssign1.setColumns(10);
         tbAssign2.setColumns(10);
@@ -116,53 +101,152 @@ public class HomeworkGUI extends JFrame implements ActionListener {
         tbAssign8.setColumns(10);
         tbAssign9.setColumns(10);
         tbAssign10.setColumns(10);
+        
+        taInputMain.setRows(15);
+        taInputMain.setLineWrap(true);
+        JScrollPane scroll = new JScrollPane(taInputMain);
+        scroll.setPreferredSize(new Dimension(450, 150));
+        taOutputMain.setRows(5);
+        
         pnlPrompt.add(lblNumber);
-        pnlInput.add(tbAssign1);
-        pnlInput.add(tbAssign2);
-        pnlInput.add(tbAssign3);
-        pnlInput.add(tbAssign4);
-        pnlInput.add(tbAssign5);
-        pnlInput.add(tbAssign6);
-        pnlInput.add(tbAssign7);
-        pnlInput.add(tbAssign8);
-        pnlInput.add(tbAssign9);
-        pnlInput.add(tbAssign10);
-        pnlRun.add(btnRun, BorderLayout.NORTH);
+        pnlRun.add(btnRun, BorderLayout.WEST);
         btnRun.addActionListener(this);
         pnlOutput.add(lblOut, BorderLayout.NORTH);
 
         
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = .0;
-        c.weighty = .0;
-        
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 2;
+        c.gridheight = 1;
         c.gridx = 0;
         c.gridy = 0;
         cont.add(pnlPrompt, c);
-                
+        
+        
+        /* Row 1 */
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = .0;
-        c.weighty = .0;
-        c.gridwidth = 2;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
         c.gridx = 0;
         c.gridy = 1;
-        cont.add(pnlInput, c);
+        cont.add(tbAssign1, c);
         
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = .0;
-        c.weighty = .0;
-        c.gridwidth = 2;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 1;
+        c.gridy = 1;
+        cont.add(tbAssign2, c);
+        
+        /* Row 2 */
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
         c.gridx = 0;
         c.gridy = 2;
+        cont.add(tbAssign3, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 1;
+        c.gridy = 2;
+        cont.add(tbAssign4, c);
+        
+        /* Row 3 */
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 3;
+        cont.add(tbAssign5, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 1;
+        c.gridy = 3;
+        cont.add(tbAssign6, c);
+        
+        /* Row 4 */
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 4;
+        cont.add(tbAssign7, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 1;
+        c.gridy = 4;
+        cont.add(tbAssign8, c);
+        
+        /* Row 5 */
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 5;
+        cont.add(tbAssign9, c);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 1;
+        c.gridy = 5;
+        cont.add(tbAssign10, c);
+        
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 2;
+        c.gridheight = 3;
+        c.gridx = 3;
+        c.gridy = 0;
+        cont.add(scroll, c);
+        
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = .5;
+        c.weighty = .5;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 3;
+        c.gridy = 3;
         cont.add(pnlRun, c);
         
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = .0;
-        c.weighty = .0;
+        c.weightx = .5;
+        c.weighty = .5;
         c.gridwidth = 2;
-        c.gridx = 0;
-        c.gridy = 3;
-        cont.add(pnlOutput, c);
+        c.gridheight = 2;
+        c.gridx = 2;
+        c.gridy = 4;
+        cont.add(taOutputMain, c);
 
         setVisible(true);
     }
