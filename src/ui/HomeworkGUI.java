@@ -282,4 +282,5 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 			taOutputMain.setEditable(false);
 		}
 	}
+
 }
