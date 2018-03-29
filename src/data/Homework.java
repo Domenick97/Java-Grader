@@ -34,26 +34,21 @@ public class Homework {
 	 * @throws FileNotFoundException
 	 *             exception thrown if the "HW-student.txt" is not found
 	 */
-	public String scan(String[] assign) throws FileNotFoundException {
-		Scanner wordReader = new Scanner(new File("input/HW-student.txt"));
-		
-		// Array of assignment names to check for completion
-		String[] assignments = assign;//{ "numbersElements", "ReferenceMystery2", "jaggedArray", "mode", "longestSortedSequence",
-				//"ReferenceMystery3", "PointClient", "publicVsPrivate", "addTimeSpan", "getSlopeLine" };
-
+	public String scan(String[] assignments, String input) {
+		Scanner wordReader = new Scanner(input);
 		int count = 0;
-
 		String missing = "";
-		while (wordReader.hasNext()) {
-			String current = wordReader.nextLine();
-			int start = current.indexOf(":");
+		
+		while (wordReader.hasNext()) {			
+			String next = wordReader.next();
 			for (int i = 0; i < assignments.length; i++) {
-				if (current.substring(start + 2).equals(assignments[i])) {
+				if (next.equals(assignments[i])) {
 					assignments[i] = "Check";
 					break;
 				}
 			}
 		}
+		
 		boolean t = false;
 		
 		for (int j = 0; j < assignments.length; j++) {
