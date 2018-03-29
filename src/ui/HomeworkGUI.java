@@ -1,22 +1,16 @@
 package ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
-//import javax.swing.JCheckBox;
-//import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -26,8 +20,6 @@ import data.Homework;
 
 /**
  * The GUI for the HomeworkGUI
- * 
- * Modified from BinaryDecimalConverter in the BaseConvertor program
  * 
  * @author Domenick DiBiase
  *
@@ -71,13 +63,24 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 	JPanel pnlRun = new JPanel();
 	/** Panel for the output */
 	JPanel pnlOutput = new JPanel();
+
 	/** Label for the output */
 	JLabel lblOut;
 
+	/**
+	 * Main method that is run upon start of the program Creates an instance of the
+	 * Homework GUI
+	 * 
+	 * @param args
+	 *            command line arguments
+	 */
 	public static void main(String[] args) {
 		new HomeworkGUI();
 	}
 
+	/**
+	 * Graphical User Interface for the homework grader
+	 */
 	public HomeworkGUI() {
 		Container cont = getContentPane();
 
@@ -92,8 +95,7 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 
 		lblOut = new JLabel();
 		JLabel lblNumber = new JLabel("  Enter assignments below");
-		
-		
+
 		pnlAssignments.setLayout(new GridBagLayout());
 
 		tbAssign1.setColumns(10);
@@ -110,18 +112,19 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		taInputMain.setRows(15);
 		taInputMain.setLineWrap(true);
 		JScrollPane scroll = new JScrollPane(taInputMain);
-		//scroll.setPreferredSize(new Dimension(450, 150));
+		// scroll.setPreferredSize(new Dimension(450, 150));
 		taOutputMain.setRows(5);
 		taOutputMain.setLineWrap(true);
-		//taOutputMain.setHorizontalAlignment(JTextField.CENTER);// setAlignment(Component.CENTER);
+		// taOutputMain.setHorizontalAlignment(JTextField.CENTER);//
+		// setAlignment(Component.CENTER);
 		taOutputMain.setEditable(false);
-			
-		//pnlAssignments.add(lblNumber);
+
+		// pnlAssignments.add(lblNumber);
 		pnlRun.add(btnRun, BorderLayout.WEST);
 		btnRun.addActionListener(this);
 		pnlOutput.add(lblOut, BorderLayout.NORTH);
-		
-		c.insets = new Insets(2,60, 2, 2);
+
+		c.insets = new Insets(2, 60, 2, 2);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = .5;
 		c.weighty = .5;
@@ -130,7 +133,7 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		c.gridx = 0;
 		c.gridy = 0;
 		pnlAssignments.add(lblNumber, c);
-		
+
 		c.insets = new Insets(2, 2, 2, 2);
 		/* Row 1 */
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -169,8 +172,7 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		c.gridx = 1;
 		c.gridy = 2;
 		pnlAssignments.add(tbAssign4, c);
-		
-		
+
 		/* Row 3 */
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = .5;
@@ -227,8 +229,7 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		c.gridx = 1;
 		c.gridy = 5;
 		pnlAssignments.add(tbAssign10, c);
-		
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = .5;
 		c.weighty = .5;
@@ -269,13 +270,18 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
+	/**
+	 * Action listener method that calls the grade method from the homework class
+	 * when the grade button is clicked. When the clear button is clicked it clears
+	 * the text from the input text area.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == btnRun) {
 			System.out.println("Button \"Grade\" *click*");
 			taOutputMain.setText(Homework.getInstance()
-					.scan(new String[] { tbAssign1.getText(), tbAssign2.getText(), tbAssign3.getText(),
+					.grade(new String[] { tbAssign1.getText(), tbAssign2.getText(), tbAssign3.getText(),
 							tbAssign4.getText(), tbAssign5.getText(), tbAssign6.getText(), tbAssign7.getText(),
 							tbAssign8.getText(), tbAssign9.getText(), tbAssign10.getText() },
 							taInputMain.getText().replaceAll("[^\\x20-\\x7e]", "")));
