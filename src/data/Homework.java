@@ -38,8 +38,7 @@ public class Homework {
 		Scanner wordReader = new Scanner(new File("input/HW-student.txt"));
 		
 		// Array of assignment names to check for completion
-		String[] assignments = assign;//{ "numbersElements", "ReferenceMystery2", "jaggedArray", "mode", "longestSortedSequence",
-				//"ReferenceMystery3", "PointClient", "publicVsPrivate", "addTimeSpan", "getSlopeLine" };
+		String[] assignments = assign;
 
 		int count = 0;
 

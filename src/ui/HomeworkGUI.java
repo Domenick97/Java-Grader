@@ -173,7 +173,9 @@ public class HomeworkGUI extends JFrame implements ActionListener {
         if (e.getSource() == btnRun) {
             System.out.println("Button \"Grade\" *click*");
             try{
-                lblOut.setText(Homework.getInstance().scan(new String[] {tbAssign1.getText(),tbAssign2.getText(),tbAssign3.getText(),tbAssign4.getText(),tbAssign5.getText(),tbAssign6.getText(),tbAssign7.getText(),tbAssign8.getText(),tbAssign9.getText(),tbAssign10.getText()}));
+                lblOut.setText(Homework.getInstance().scan(new String[] {tbAssign1.getText(),tbAssign2.getText(),
+                        tbAssign3.getText(),tbAssign4.getText(),tbAssign5.getText(),tbAssign6.getText(),
+                        tbAssign7.getText(),tbAssign8.getText(),tbAssign9.getText(),tbAssign10.getText()}));
             } catch(FileNotFoundException p){
                 JOptionPane.showMessageDialog(null, p, "Error Message" , JOptionPane.INFORMATION_MESSAGE);
             }
