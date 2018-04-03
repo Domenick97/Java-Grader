@@ -8,74 +8,70 @@ import java.io.*;
  * student to determine their homework grade. Outputs the grade the student
  * should receive and feedback of which assignments are missing.
  * 
+ * Date Created: November 29, 2017
+ * 
+ * Update: April, 3, 2018
+ * 
+ * @version 1.5
  * 
  * @author Domenick DiBiase
- *
  */
 public class Homework {
 	/** Instance of the Homework */
 	private static Homework singlton = new Homework();
 
 	/**
-	 * Gets the instance of the
+	 * Gets the instance of the Homework class
 	 * 
-	 * @return the instance of the Derivative
+	 * @return the instance of the Homework class
 	 */
 	public static Homework getInstance() {
 		return singlton;
 	}
 
 	/**
-	 * Main function responsible for reading a text file and determining the
-	 * students grade.
+	 * Grades the sudent's homework assignment by scanning the the input text (what
+	 * the student submitted) for specific assignments.
 	 * 
 	 * @param assign
 	 *            array of assignment names
 	 * @throws FileNotFoundException
 	 *             exception thrown if the "HW-student.txt" is not found
 	 */
-	public String grade(String[] assignments, String input) {
+	public String grade(ArrayList<String> assignments, String input) {
 		Scanner wordReader = new Scanner(input);
-		int count = 0;
+		int totalGrade = 100;
 		String missing = "";
 
 		// Scans the text input for the assignment names marking them as complete if
 		// they are found
 		while (wordReader.hasNext()) {
 			String next = wordReader.next();
-			for (int i = 0; i < assignments.length; i++) {
-				if (next.equals(assignments[i])) {
-					assignments[i] = "Check";
+			System.out.println(next);
+			System.out.println("OK");
+			for (int i = 0; i < assignments.size(); i++) {
+				if (next.equals(assignments.get(i))) {
+					assignments.remove(i);
 					break;
 				}
 			}
 		}
 
-		// Boolean for first assignment
-		boolean t = false;
-
 		// Determines which assignments are missing and calculates the students grade
-		for (int j = 0; j < assignments.length; j++) {
-			if (assignments[j].equals("Check"))
-				count += 10;
-			else {
-				assignments[j] = assignments[j].trim();
-				
-				if (t == false && assignments[j] != null && assignments[j].length() != 0) {
-					missing += assignments[j];
-					t = true;
-					
-				} else if(assignments[j] != null && assignments[j].length() != 0) {
-					missing += ", " + assignments[j];
-				}
-			}
+		for (int j = 0; j < assignments.size(); j++) {
+			totalGrade -= 10;
+			if(j ==0) {
+				missing += assignments.get(j);
+			} else {
+				missing += ", " + assignments.get(j);
+			}			
 		}
 
 		wordReader.close();
 
-		if (count == 100)
+		if (totalGrade == 100)
 			return "100";
 		else
-			return count + "   missing " + missing + "";
+			return totalGrade + "   missing " + missing + "";
 	}
 }

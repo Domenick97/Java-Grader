@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,35 +22,25 @@ import data.Homework;
 /**
  * The GUI for the HomeworkGUI
  * 
+ * Date Created: January 7, 2018
+ * 
+ * Update: April, 3, 2018
+ * 
+ * @version 1.5
+ * 
  * @author Domenick DiBiase
- *
  */
 public class HomeworkGUI extends JFrame implements ActionListener {
 	/** Serial version ID Number */
 	private static final long serialVersionUID = 1L;
-	/** Button to run the conversion */
+	/** Button to run the grading sequence */
 	JButton btnRun = new JButton("Grade");
+	/** Button to clear the input panel */
+	JButton btnClear = new JButton("Clear");
 
-	/** Text box for assignment names */
-	JTextField tbAssign1 = new JTextField();
-	/** Text box for assignment names */
-	JTextField tbAssign2 = new JTextField();
-	/** Text box for assignment names */
-	JTextField tbAssign3 = new JTextField();
-	/** Text box for assignment names */
-	JTextField tbAssign4 = new JTextField();
-	/** Text box for assignment names */
-	JTextField tbAssign5 = new JTextField();
-	/** Text box for assignment names */
-	JTextField tbAssign6 = new JTextField();
-	/** Text box for assignment names */
-	JTextField tbAssign7 = new JTextField();
-	/** Text box for assignment names */
-	JTextField tbAssign8 = new JTextField();
-	/** Text box for assignment names */
-	JTextField tbAssign9 = new JTextField();
-	/** Text box for assignment names */
-	JTextField tbAssign10 = new JTextField();
+	/** Array of text box assignment inputs */
+	JTextField tbAssignments[] = new JTextField[10];
+
 	/** Text area to paste in the assignment */
 	JTextArea taInputMain = new JTextArea();
 	/** Text area to paste in the assignment */
@@ -98,29 +89,21 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 
 		pnlAssignments.setLayout(new GridBagLayout());
 
-		tbAssign1.setColumns(10);
-		tbAssign2.setColumns(10);
-		tbAssign3.setColumns(10);
-		tbAssign4.setColumns(10);
-		tbAssign5.setColumns(10);
-		tbAssign6.setColumns(10);
-		tbAssign7.setColumns(10);
-		tbAssign8.setColumns(10);
-		tbAssign9.setColumns(10);
-		tbAssign10.setColumns(10);
+		// Initializes the input text boxes for assignment names
+		for (int i = 0; i < tbAssignments.length; i++) {
+			tbAssignments[i] = new JTextField();
+			tbAssignments[i].setColumns(10);
+		}
 
 		taInputMain.setRows(15);
 		taInputMain.setLineWrap(true);
 		JScrollPane scroll = new JScrollPane(taInputMain);
-		// scroll.setPreferredSize(new Dimension(450, 150));
 		taOutputMain.setRows(5);
 		taOutputMain.setLineWrap(true);
-		// taOutputMain.setHorizontalAlignment(JTextField.CENTER);//
-		// setAlignment(Component.CENTER);
 		taOutputMain.setEditable(false);
 
-		// pnlAssignments.add(lblNumber);
 		pnlRun.add(btnRun, BorderLayout.WEST);
+		pnlRun.add(btnClear, BorderLayout.EAST);
 		btnRun.addActionListener(this);
 		pnlOutput.add(lblOut, BorderLayout.NORTH);
 
@@ -135,101 +118,33 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		pnlAssignments.add(lblNumber, c);
 
 		c.insets = new Insets(2, 2, 2, 2);
-		/* Row 1 */
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 0;
-		c.gridy = 1;
-		pnlAssignments.add(tbAssign1, c);
 
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 1;
-		c.gridy = 1;
-		pnlAssignments.add(tbAssign2, c);
+		// Adds the assignment input text boxes to the assignments panel
+		for (int i = 0; i < tbAssignments.length; i += 2) {
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.weightx = 1;
+			c.weighty = 1;
+			c.gridwidth = 1;
+			c.gridheight = 1;
+			c.gridx = 0;
+			c.gridy = i + 1;
+			pnlAssignments.add(tbAssignments[i], c);
 
-		/* Row 2 */
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 0;
-		c.gridy = 2;
-		pnlAssignments.add(tbAssign3, c);
+			// If the number of assignments is odd then don't add the second box on the last
+			// row
+			if (i + 1 < tbAssignments.length) {
+				c.fill = GridBagConstraints.HORIZONTAL;
+				c.weightx = 1;
+				c.weighty = 1;
+				c.gridwidth = 1;
+				c.gridheight = 1;
+				c.gridx = 1;
+				c.gridy = i + 1;
+				pnlAssignments.add(tbAssignments[i + 1], c);
+			}
+		}
 
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 1;
-		c.gridy = 2;
-		pnlAssignments.add(tbAssign4, c);
-
-		/* Row 3 */
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 0;
-		c.gridy = 3;
-		pnlAssignments.add(tbAssign5, c);
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 1;
-		c.gridy = 3;
-		pnlAssignments.add(tbAssign6, c);
-
-		/* Row 4 */
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 0;
-		c.gridy = 4;
-		pnlAssignments.add(tbAssign7, c);
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 1;
-		c.gridy = 4;
-		pnlAssignments.add(tbAssign8, c);
-
-		/* Row 5 */
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 0;
-		c.gridy = 5;
-		pnlAssignments.add(tbAssign9, c);
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridx = 1;
-		c.gridy = 5;
-		pnlAssignments.add(tbAssign10, c);
-
+		// Adds the assignment panel to the container
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = .5;
 		c.weighty = .5;
@@ -239,7 +154,7 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		c.gridy = 1;
 		cont.add(pnlAssignments, c);
 
-		// Input Text Area
+		// Adds the input text area to the container
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = .5;
 		c.weighty = .5;
@@ -249,6 +164,7 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		c.gridy = 1;
 		cont.add(scroll, c);
 
+		// Adds the run button to the container
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = .5;
 		c.weighty = .5;
@@ -258,12 +174,14 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		c.gridy = 6;
 		cont.add(pnlRun, c);
 
+		// Adds the output text area to the container
+		c.insets = new Insets(2, 100, 2, 100);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = .5;
 		c.weighty = .5;
-		c.gridwidth = 4;
+		c.gridwidth = 3;
 		c.gridheight = 2;
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 7;
 		cont.add(taOutputMain, c);
 
@@ -280,12 +198,22 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 
 		if (e.getSource() == btnRun) {
 			System.out.println("Button \"Grade\" *click*");
-			taOutputMain.setText(Homework.getInstance()
-					.grade(new String[] { tbAssign1.getText(), tbAssign2.getText(), tbAssign3.getText(),
-							tbAssign4.getText(), tbAssign5.getText(), tbAssign6.getText(), tbAssign7.getText(),
-							tbAssign8.getText(), tbAssign9.getText(), tbAssign10.getText() },
-							taInputMain.getText().replaceAll("[^\\x20-\\x7e]", "")));
+			ArrayList<String> assignList = new ArrayList<String>();
+
+			for (JTextField k : tbAssignments) {
+				String next = k.getText().trim();
+				if (next != null && !next.equals("")) {
+					assignList.add(next);
+				}
+			}
+			taOutputMain.setText(
+					Homework.getInstance().grade(assignList, taInputMain.getText().replaceAll("[^\\x20-\\x7e]", " ")));
 			taOutputMain.setEditable(false);
+		}
+		
+		if (e.getSource() == btnClear) {
+			
+		}
 		}
 	}
 
