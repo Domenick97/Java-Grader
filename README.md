@@ -14,8 +14,27 @@ Quick program I wrote to scan through students homework assignments for the spec
 
     1. Open Homework.pdf
     
-    2. Copy all of the information from the pdf into the large text area on the right side.
+    2. Copy all of the information from the pdf into the large text area.
     
     3. Then click "Grade"
     
     4. Copy grade and auto-generated comments for missing assignments at the bottom into the grading system.
+    
+    (Optional)
+    
+    5. Click "Clear" to clear the last students input and grade.
+    
+## Features
+
+### Clear
+
+The Clear button clears just the input text area and output to reduce mixing up grades between students.
+
+<b>Note:</b> The assignment names are not cleared.
+
+
+### Non-Unicode Characters
+
+The program will filter out non-Unicode characters from the input when the user clicks the grade button.
+
+> The assignment names can not include non-Unicode characters.
