@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import data.Homework;
 
@@ -33,6 +34,7 @@ import data.Homework;
 public class HomeworkGUI extends JFrame implements ActionListener {
 	/** Serial version ID Number */
 	private static final long serialVersionUID = 1L;
+
 	/** Button to run the grading sequence */
 	JButton btnRun = new JButton("Grade");
 	/** Button to clear the input panel */
@@ -54,9 +56,6 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 	JPanel pnlRun = new JPanel();
 	/** Panel for the output */
 	JPanel pnlOutput = new JPanel();
-
-	/** Label for the output */
-	JLabel lblOut;
 
 	/**
 	 * Main method that is run upon start of the program Creates an instance of the
@@ -84,9 +83,12 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		cont.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
-		lblOut = new JLabel();
-		JLabel lblNumber = new JLabel("  Enter assignments below");
+		// Initializes the assignments prompt
+		JLabel lblAssignPrompt = new JLabel("Enter assignments below", SwingConstants.CENTER);
 
+		/*
+		 * Assignments Panel
+		 */
 		pnlAssignments.setLayout(new GridBagLayout());
 
 		// Initializes the input text boxes for assignment names
@@ -95,35 +97,24 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 			tbAssignments[i].setColumns(10);
 		}
 
-		taInputMain.setRows(15);
-		taInputMain.setLineWrap(true);
-		JScrollPane scroll = new JScrollPane(taInputMain);
-		taOutputMain.setRows(5);
-		taOutputMain.setLineWrap(true);
-		taOutputMain.setEditable(false);
-
-		pnlRun.add(btnRun, BorderLayout.WEST);
-		pnlRun.add(btnClear, BorderLayout.EAST);
-		btnRun.addActionListener(this);
-		pnlOutput.add(lblOut, BorderLayout.NORTH);
-
-		c.insets = new Insets(2, 60, 2, 2);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
+		// Adds the assignments prompt to the panel
+		c.insets = new Insets(2, 2, 2, 2);
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.weighty = 1;
 		c.gridwidth = 2;
 		c.gridheight = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		pnlAssignments.add(lblNumber, c);
+		pnlAssignments.add(lblAssignPrompt, c);
 
 		c.insets = new Insets(2, 2, 2, 2);
 
 		// Adds the assignment input text boxes to the assignments panel
 		for (int i = 0; i < tbAssignments.length; i += 2) {
-			c.fill = GridBagConstraints.HORIZONTAL;
+			c.fill = GridBagConstraints.BOTH;
 			c.weightx = 1;
-			c.weighty = 1;
+			c.weighty = .4;
 			c.gridwidth = 1;
 			c.gridheight = 1;
 			c.gridx = 0;
@@ -133,9 +124,9 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 			// If the number of assignments is odd then don't add the second box on the last
 			// row
 			if (i + 1 < tbAssignments.length) {
-				c.fill = GridBagConstraints.HORIZONTAL;
+				c.fill = GridBagConstraints.BOTH;
 				c.weightx = 1;
-				c.weighty = 1;
+				c.weighty = .4;
 				c.gridwidth = 1;
 				c.gridheight = 1;
 				c.gridx = 1;
@@ -144,8 +135,10 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 			}
 		}
 
+		c.insets = new Insets(2, 5, 2, 2);
+
 		// Adds the assignment panel to the container
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.fill = GridBagConstraints.BOTH;
 		c.weightx = .5;
 		c.weighty = .5;
 		c.gridwidth = 2;
@@ -154,36 +147,108 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 		c.gridy = 1;
 		cont.add(pnlAssignments, c);
 
-		// Adds the input text area to the container
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
+		/*
+		 * Input Panel
+		 */
+		c.insets = new Insets(2, 2, 2, 2);
+		pnlInput.setLayout(new GridBagLayout());
+
+		// Initializes the input prompt
+		JLabel lblInputPrompt = new JLabel("Enter assignments below", SwingConstants.CENTER);
+
+		taInputMain.setLineWrap(true);
+		JScrollPane scroll = new JScrollPane(taInputMain);
+
+		// Adds the input prompt to the panel
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.weighty = .15;
+		c.gridwidth = 3;
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 0;
+		pnlInput.add(lblInputPrompt, c);
+
+		// Adds the input text area to the panel
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.gridwidth = 3;
+		c.gridheight = 4;
+		c.gridx = 0;
+		c.gridy = 1;
+		pnlInput.add(scroll, c);
+
+		// Adds the input panel to the container
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.weighty = 1;
 		c.gridwidth = 2;
 		c.gridheight = 4;
 		c.gridx = 3;
-		c.gridy = 1;
-		cont.add(scroll, c);
+		c.gridy = 0;
+		cont.add(pnlInput, c);
+
+		/*
+		 * Buttons Panel
+		 */
+		pnlRun.add(btnRun, BorderLayout.WEST);
+		pnlRun.add(btnClear, BorderLayout.EAST);
+		btnRun.addActionListener(this);
+		btnClear.addActionListener(this);
 
 		// Adds the run button to the container
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.fill = GridBagConstraints.BOTH;
 		c.weightx = .5;
 		c.weighty = .5;
 		c.gridwidth = 1;
 		c.gridheight = 1;
 		c.gridx = 3;
-		c.gridy = 6;
+		c.gridy = 4;
 		cont.add(pnlRun, c);
 
-		// Adds the output text area to the container
-		c.insets = new Insets(2, 100, 2, 100);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.weighty = .5;
+		/*
+		 * Output Panel
+		 */
+		pnlOutput.setLayout(new GridBagLayout());
+
+		// Initializes the output prompt
+		JLabel lblOutputPrompt = new JLabel("Student's grade and commits", SwingConstants.CENTER);
+
+		taOutputMain.setLineWrap(true);
+		taOutputMain.setEditable(false);
+
+		// Adds the output prompt to the panel
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.weighty = .15;
 		c.gridwidth = 3;
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 0;
+		pnlOutput.add(lblOutputPrompt, c);
+
+		// Adds the output text area to the panel
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.gridwidth = 3;
+		c.gridheight = 4;
+		c.gridx = 0;
+		c.gridy = 1;
+		pnlOutput.add(taOutputMain, c);
+
+		c.insets = new Insets(2, 80, 20, 80);
+
+		// Adds the output panel to the container
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.gridwidth = 4;
 		c.gridheight = 2;
-		c.gridx = 1;
-		c.gridy = 7;
-		cont.add(taOutputMain, c);
+		c.gridx = 0;
+		c.gridy = 5;
+		cont.add(pnlOutput, c);
 
 		setVisible(true);
 	}
@@ -196,8 +261,9 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		// If the run button is clicked
 		if (e.getSource() == btnRun) {
-			System.out.println("Button \"Grade\" *click*");
+			// System.out.println("Button \"Grade\" *click*");
 			ArrayList<String> assignList = new ArrayList<String>();
 
 			for (JTextField k : tbAssignments) {
@@ -210,10 +276,13 @@ public class HomeworkGUI extends JFrame implements ActionListener {
 					Homework.getInstance().grade(assignList, taInputMain.getText().replaceAll("[^\\x20-\\x7e]", " ")));
 			taOutputMain.setEditable(false);
 		}
-		
+
+		// If the clear button is clicked
 		if (e.getSource() == btnClear) {
-			
-		}
+			taInputMain.setText("");
+			taOutputMain.setText("");
+			taOutputMain.setEditable(false);
+
 		}
 	}
 

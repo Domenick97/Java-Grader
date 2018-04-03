@@ -47,8 +47,7 @@ public class Homework {
 		// they are found
 		while (wordReader.hasNext()) {
 			String next = wordReader.next();
-			System.out.println(next);
-			System.out.println("OK");
+
 			for (int i = 0; i < assignments.size(); i++) {
 				if (next.equals(assignments.get(i))) {
 					assignments.remove(i);
@@ -60,18 +59,19 @@ public class Homework {
 		// Determines which assignments are missing and calculates the students grade
 		for (int j = 0; j < assignments.size(); j++) {
 			totalGrade -= 10;
-			if(j ==0) {
+			if (j == 0) {
 				missing += assignments.get(j);
 			} else {
 				missing += ", " + assignments.get(j);
-			}			
+			}
 		}
 
 		wordReader.close();
 
+		// Output
 		if (totalGrade == 100)
 			return "100";
 		else
-			return totalGrade + "   missing " + missing + "";
+			return totalGrade + "   missing " + missing;
 	}
 }
